@@ -1,0 +1,275 @@
+<html>
+<head> 
+<title>JavaScript calendar</title>
+    <meta charset = "UTF-8">
+    <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="jsDatePick_ltr.min.css" />
+    <link rel="stylesheet" type="text/css" href="CalendarStyle.css" />
+    <script type="text/javascript" src="jsDatePick.min.1.3.js"></script>
+    <script>
+       
+    </script>
+</head> 
+ 
+<body> 
+ <div id="div3_example" style="margin:0 auto 0; width:205px; height:230px;">	
+    </div>
+        
+<!--<div id="calendar"><script> calendar();</script></div> -->
+        <div id="wrapper">
+        <button id="add">Add Event</button>
+        <button id="remove">Remove Event</button>
+        <button id="removeEvent">Remove Event by name</button>
+        <textarea id="nameForRemove">Enter Name of event to be removed</textarea>
+        <script src="Library.js"></script>
+
+		<div class="events"></div>
+        <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        
+	   </div>
+        <script>
+            var obj;
+            var putEvent = document.getElementsByName("putEvent");
+            //------------------------------------------------------
+            var rem=document.getElementById("removeEvent");
+            rem.onclick = function () {
+                var text = document.getElementById("nameForRemove").value;
+                text = text.replace(/ /g, "");
+                var count = 0;
+                var pr;
+                var eventsObjects = localStorage.objEvent.split(";");
+                var Chday = [], Chmonth = [], Chyear=[];
+                for (var i = 0, length = eventsObjects.length; i < length - 1; i++) {
+
+                    var data = eventsObjects[i].split(" ");
+                    var day = parseInt(data[0]);
+                    var month = parseInt(data[1]);
+                    var year = parseInt(data[2]);
+
+                    var byline = eventsObjects[i].split("|");
+                    if (byline[1] != "undefined") {
+                        pr = byline[1].replace(/ /g, "");
+                    }
+                    if (text===pr) {
+                        eventsObjects[i] = "";
+                        Chday[count] = day;
+                        Chmonth[count] = month;
+                        Chyear[count] = year;
+                        count++;
+                    }
+                }
+                
+                for (var i = 0, length = eventsObjects.length; i < length - 1; i++) {
+                    if (eventsObjects[i] != "") {
+                        if (i == 0) { localStorage.objEvent = eventsObjects[i] + ";" }
+                        else{
+                            localStorage.objEvent+=eventsObjects[i]+";"
+                            }
+                    }
+                }
+                eventsObjects = localStorage.objEvent.split(";");
+                var calendarYear = parseInt(document.getElementsByClassName("controlsBarText")[0]
+                                                    .innerHTML.split(" ")[1]);
+                var monthName = document.getElementsByClassName("controlsBarText")[0]
+                                .innerHTML.split(",")[0];
+                var calendarMonth = g_l.MONTHS.indexOf(monthName) + 1;
+                for (var i = 0, n = eventsObjects.length; i < n; i++) {
+                    var data = eventsObjects[i].split(" ");
+                    var day = parseInt(data[0]);
+                    var month = parseInt(data[1]);
+                    var year = parseInt(data[2]);
+                    
+                    
+                    if (calendarYear === year && calendarMonth === month) {
+                        
+                        var dayNormalToday = document.getElementsByClassName("dayNormalToday");
+                             
+                        var now = new Date();
+                        var yearNow = now.getFullYear();
+                        var monthNow = now.getMonth() + 1;
+                        var mask = 1;
+                        if (calendarYear === yearNow && calendarMonth === monthNow) {
+                            if (parseInt(dayNormalToday[0].innerHTML) === day) {
+                                mask = -1;
+                            }
+                            if (mask == 1) {
+                                dayNormalToday[0].style.color = "red";
+                            }                            
+                        }
+                    }
+                }
+                
+                    if (count> 0) {
+                            var dayNormal = document.getElementsByClassName("dayNormal");
+                            for (var j = 0, length = dayNormal.length; j < length; j++) {
+                                    dayNormal[j].style.color = "black";
+                            }
+                        }              
+            };  
+            //-----------------------------------------------------
+            var yearBackward = document.getElementsByClassName("yearBackwardButton");
+            function allDays() {
+                if (localStorage.objEvent == "undefined") {
+                    localStorage.objEvent = "";
+                } else {
+                    setTimeout(function () {
+                        var eventsObjects = localStorage.objEvent.split(";");
+                        for (var i = 0, n = eventsObjects.length; i < n; i++) {
+                            var data = eventsObjects[i].split(" ");
+                            var day = parseInt(data[0]);
+                            var month = parseInt(data[1]);
+                            var year = parseInt(data[2]);
+                            var calendarYear = parseInt(document.getElementsByClassName("controlsBarText")[0]
+                                                            .innerHTML.split(" ")[1]);
+                            var monthName = document.getElementsByClassName("controlsBarText")[0]
+                                            .innerHTML.split(",")[0];
+                            var calendarMonth = g_l.MONTHS.indexOf(monthName) + 1;
+                            if (calendarYear === year && calendarMonth === month) {
+                                var dayNormal = document.getElementsByClassName("dayNormal");
+                                var dayNormalToday = document.getElementsByClassName("dayNormalToday");
+                             
+                                var now = new Date();
+                                var yearNow = now.getFullYear();
+                                var monthNow = now.getMonth()+1;
+                                if (calendarYear === yearNow && calendarMonth === monthNow) {
+                                    if (parseInt(dayNormalToday[0].innerHTML) === day) {
+                                        dayNormalToday[0].style.color = "yellow";
+
+                                        dayNormalToday[0].addEventListener("click", function () {
+                                            var div1 = document.getElementById("div1");
+                                            div1.innerHTML = "";
+
+                                            var obj = g_globalObject.getSelectedDay();
+                                            
+                                            var info = localStorage.objEvent.split(";");
+                                            
+                                            for (var i = 0, length = info.length - 1; i < length; i++) {
+                                                var linfo = info[i].split("|");
+                                                
+                                                var dates = linfo[0].split(" ");
+                                                if (dates[0] == obj.day && dates[1] == obj.month && dates[2] == obj.year) {
+                                                    
+                                                    div1.innerHTML += "Name: " + linfo[1] + "<br />" + " Event:  " + linfo[2] + "<br />" + "<br />";
+                                                }
+                                            }
+                                            
+                                        }, false);
+                                    }
+                                }
+                                for (var j = 0, x = dayNormal.length; j < x; j++) {
+                                    if (parseInt(dayNormal[j].innerHTML) === day) {
+                                        dayNormal[j].style.color = "yellow";
+
+                                        dayNormal[j].addEventListener("click", function () {
+                                            var div1 = document.getElementById("div1");
+                                            div1.innerHTML = "";
+
+                                            var obj = g_globalObject.getSelectedDay();
+                                            
+                                            var info = localStorage.objEvent.split(";");
+                                            
+                                            for (var i = 0, length = info.length - 1; i < length; i++) {
+                                                var linfo = info[i].split("|");
+                                                
+                                                var dates = linfo[0].split(" ");
+                                                if (dates[0] == obj.day && dates[1] == obj.month && dates[2] == obj.year) {
+                                                   
+                                                    div1.innerHTML += "Name: " + linfo[1] + "<br />" + " Event: " + linfo[2] + "<br />" + "<br />";
+                                                }
+                                            }
+                                            
+                                        }, false);
+                                    }
+                                }
+                            }
+                        }
+                    }, 200);
+                }
+            }
+            allDays();
+            setInterval(allDays, 500);
+            //-----------------------------------------------------
+            window.onload = function () {
+                g_globalObject = new JsDatePick({
+                    useMode: 1,
+                    isStripped: true,
+                    target: "div3_example"
+                });
+
+                g_globalObject.setOnSelectedDelegate(function () {
+                    var obj = g_globalObject.getSelectedDay();
+                    var div1 = document.getElementById("div1");
+                    div1.innerHTML = "";
+                });
+
+                for (var i = 0, length = putEvent.length; i < length; i++) {                    
+                    putEvent[i].style.display = 'none';
+                }
+
+            };
+       
+            var EventsJson = {};
+          
+            document.getElementById("add").onclick = function () {
+                myLibrary.AddElement("div.events", "", "button");
+                myLibrary.ManipulateElementAttribute(".events", "button", "class", "event");
+                myLibrary.ManipulateElementAttribute(".events", "button", "id", "drag1");
+
+                myLibrary.AddElement(".event", "Enter Name", "textarea");
+                myLibrary.ManipulateElementAttribute(".event", "textarea", "id", "name");
+                myLibrary.AddElement(".event", "Enter Event", "textarea");
+                document.getElementById("name").parentElement.childNodes[1].id = "eventText";
+                
+                myLibrary.ManipulateElementAttribute(".event", "textarea", "class", "text");
+                myLibrary.ManipulateElementAttribute(".event", "textarea", "rows", "1");
+                myLibrary.ManipulateElementAttribute(".event", "textarea", "cols", "20");
+                
+                myLibrary.GetDomElement(".event").draggable = true;
+                myLibrary.GetDomElement(".event").ondragstart = function () { drag(event); };
+                myLibrary.ManipulateElementAttribute(".events", el, ondragstart, "drag(event)");
+            };
+
+        
+            var el = document.getElementById("remove");
+            el.onclick = function () {
+                myLibrary.RemoveElement("div.events", ".event");
+            };
+
+            function allowDrop(ev) {
+                ev.preventDefault();
+            }
+
+            function drag(ev) {
+                ev.dataTransfer.setData("Text", ev.target.id);
+            }
+            var id = "";
+            
+            
+            
+            function drop(ev) {
+                ev.preventDefault();
+                var data = ev.dataTransfer.getData("Text");
+                ev.target.appendChild(document.getElementById(data));
+                obj = g_globalObject.getSelectedDay();
+                var name = obj.day + "."+ obj.month +"." + obj.year;
+                myLibrary.ManipulateElementAttribute("#div1", ".event", "name", "putEvent");
+                if (name != "undefined.undefined.undefined") {
+                    myLibrary.ManipulateElementAttribute("#div1", ".event", "class", "" + name + "");
+                    var element = document.getElementsByClassName(name);
+                    for (var i = 0, length = element.length; i < length; i++) {
+                        element[i].style.display = 'block';
+                    }
+                    var objEvent = obj.day + " " + obj.month + " " + obj.year + " | " +
+                                   document.getElementById("name").value + " | " +
+                                   document.getElementById("eventText").value;                    
+                    
+                    localStorage.objEvent += objEvent+";" ;
+                }
+                
+            }
+            
+          
+        </script>
+</body> 
+
+</html>

@@ -1,0 +1,166 @@
+﻿body {
+}
+/*button[name=putEvent] {
+    visibility:hidden;
+}*/
+#wrapper{
+    width:80%;
+    height:1000px;
+    margin-left: 10%;
+    border: 2px solid black;
+    background: grey;
+}
+#add {
+    width: 40%;
+    margin-left: 5%;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-left: 5px solid black;
+    border-right: 5px solid black;
+    border-top: 2px solid black; 
+    border-bottom: inset;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px black;
+    cursor: pointer;
+}
+#add:hover{
+     background: #440138;
+     font-weight: bold;
+     color: white;
+}
+#add:active{
+    border:  inset  ;
+}
+#remove:active{
+    border: inset  ;
+}
+#remove:hover{
+      background: #440138;
+      font-weight: bold;
+      color: white;
+}
+#remove{
+    width: 40%;
+    margin-left: 10%;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-left: 5px solid black;
+    border-right: 5px solid black;
+    border-top: 2px solid black;  
+    border-bottom: inset;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px black;
+    cursor: pointer;
+}
+
+#div1{
+    width:90%;
+    margin-left: 5%;
+    height: 900px;
+    border:1px solid black;
+    background: #d2eef2;
+}
+
+#drag1{
+    height: 100px;
+}
+
+.events{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 90%;
+    margin-left: 5%;
+}
+.event {
+    width: 95%;
+    margin-left: 2.5%;
+    height: 400px;
+    border:1px solid black;
+    position: relative;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: #440138;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px black;
+    
+}
+
+.event textarea{
+    display: block;
+    width: 90%;
+    margin-left: 5%;
+    border-radius: 15px;
+    background: #d2dfef;
+    font-size: 14pt;
+    text-align: center;
+}
+.putEvent{
+    width: 95%;
+    margin-left: 2.5%;
+    height: 400px;
+    height:4em;
+    border:1px solid black;
+    position: relative;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: #440138;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px black;
+}
+.putEvent textarea{
+    display: block;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 5px;
+    border-radius: 15px;
+    background: #d2dfef;
+    font-size: 14pt;
+    text-align: center;
+}
+
+#removeEvent{
+
+    width: 40%;
+    margin-left: 5%;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-left: 5px solid black;
+    border-right: 5px solid black;
+    border-top: 2px solid black;  
+    border-bottom: inset;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px black;
+    cursor: pointer;
+}
+#removeEvent:active{
+    border: inset  ;
+}
+#removeEvent:hover{
+      background: #a38258;
+      font-weight: bold;
+      color: white;
+}
+#nameForRemove{
+    display:block;
+    width: 90%;
+    margin-left: 5%;
+      margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    background: #d2dfef;
+    font-size: 14pt;
+    text-align: center;
+}
+
+#rfDate{
+    width: 90%;
+    margin-left:  5%;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 15px;
+    background:   #d6ad77;
+}
